@@ -23,12 +23,21 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <?= $active_form
-                        ->field($chronometry_day_form,"[$hour][$minutes]activity_id", ['template' => '{input}'])
+                        ->field(
+                            $chronometry_day_form,
+                            // "[$hour][$minutes]activity_id"
+                            "activity_id[$hour][$minutes]"
+                            // ['template' => '{input}']
+                        )
                         ->hiddenInput(['class' => 'hidden-activity_id'])
                         ->label(false); ?>
 
                     <?= $active_form
-                        ->field($chronometry_day_form,"[$hour][$minutes]note", ['template' => '{input}'])
+                        ->field(
+                            $chronometry_day_form,
+                            "[$hour][$minutes]note"
+                            // ['template' => '{input}']
+                        )
                         ->hiddenInput(['class' => 'hidden-note'])
                         ->label(false); ?>
                 </td>

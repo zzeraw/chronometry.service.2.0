@@ -44,7 +44,13 @@ $( document ).ready( function() {
         // Если ДЕЯТЕЛЬНОСТЬ не существует, то ошибка
         var activities = $( '#activitiesArray' ).val();
 
-        // console.log( qf_activity, activities );
+        console.log( qf_activity );
+        console.log( activities );
+        console.log( activities[1] );
+        console.log( $.parseJSON( activities ) );
+        console.log( $.makeArray( $.parseJSON( activities ) ) );
+        console.log( $.inArray( qf_activity, $.parseJSON( activities ) ) );
+
         // var activity_button = $( '.activity-btn[data-code="' + qf_activity + '"]' );
         if ( $.inArray( qf_activity, activities) == -1 ) {
             qf_activity_field.parent( '.form-group' ).addClass( 'has-error' );
@@ -106,7 +112,7 @@ $( document ).ready( function() {
             $( '.minutes' ).removeClass('current');
 
             $( cell_id + ' .text' ).text( qf_activity );
-            $( cell_id + ' .hidden-code' ).val( qf_activity );
+            $( cell_id + ' .hidden-activity_id' ).val( qf_activity );
 
             if (qf_note != '') {
 

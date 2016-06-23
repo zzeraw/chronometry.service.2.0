@@ -70,7 +70,7 @@ class Activity extends \yii\db\ActiveRecord
         $codes = [];
 
         foreach ($activities as $activity) {
-            $codes[] = $activity->code;
+            $codes[(int)$activity->id] = $activity->code;
         }
 
         return Json::encode($codes);

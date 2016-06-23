@@ -42,7 +42,14 @@ class ChronometryController extends Controller
         $activities = Activity::find()->all();
         $json_activities = Activity::encodeCodesToJson($activities);
 
+        // var_dump($chronometry_day_form);
+        $chronometry_day_form->load(Yii::$app->request->post());
+        // var_dump($chronometry_day_form->activity_id);
+
         // TODO: проверить данные из формы POST
+        // if ($chronometry_day_form->load(Yii::$app->request->post()) && $chronometry_day_form->validate()) {
+
+        // }
         // TODO: создать из POST массив моделей ChronometryItem
         // TODO: проверить модели ChronometryItem
         // TODO: Одним запросом вставить все модели в таблицу

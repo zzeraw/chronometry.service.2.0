@@ -20,10 +20,14 @@ class ChronometryDayForm extends Model
             ['date', 'required'],
 //            ['date', 'isDateUnused', 'on' => 'create'],
 
-            ['activity_id', 'integer'],
-//            ['activity_id', 'isActivityIsset'],
+            // ['activity_id', 'integer'],
+            // ['activity_id', 'each', 'rule' => ['required']],
+            // ['activity_id', 'each', 'rule' => ['integer']],
+           ['activity_id', 'validateEachActivityIsIsset'],
+           ['activity_id', 'validateEachActivityIsInteger'],
 
-            ['note', 'string', 'max' => 300],
+            // ['note', 'string', 'max' => 300],
+            ['note', 'each', 'rule' => ['string', 'max' => 300]],
         ];
     }
     /**
@@ -38,16 +42,16 @@ class ChronometryDayForm extends Model
         ];
     }
 
-//    public function isActivityIsset($attribute, $params)
-//    {
-//        if (!in_array($this->$attribute, ['USA', 'Web'])) {
-//            $this->addError($attribute, 'The country must be either "USA" or "Web".');
-//        }
-//    }
+   public function validateEachActivityIsIsset($attribute, $params)
+   {
+       var_dump($params);
+
+       // $this->addError($attribute, 'The country must be either "USA" or "Web".');
+   }
 //
-//    public function isDateUnused($attribute, $params)
-//    {
-//
-//    }
+   public function validateEachActivityIsInteger($attribute, $params)
+   {
+
+   }
 
 }
