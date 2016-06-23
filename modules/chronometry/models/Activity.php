@@ -73,6 +73,7 @@ class Activity extends \yii\db\ActiveRecord
             $codes[(int)$activity->id] = $activity->code;
         }
 
+        // return json_encode($codes);
         return Json::encode($codes);
     }
 
