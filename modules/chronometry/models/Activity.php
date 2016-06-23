@@ -3,6 +3,7 @@
 namespace app\modules\chronometry\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "activities".
@@ -61,6 +62,19 @@ class Activity extends \yii\db\ActiveRecord
      */
     public function getChronometryItems()
     {
-        return $this->hasMany(ChronometryItems::className(), ['activity_id' => 'id']);
+        return $this->hasMany(ChronometryItem::className(), ['activity_id' => 'id']);
     }
+
+    public static function encodeCodesToJson($activities)
+    {
+        $codes = [];
+
+        foreach ($activities as $activity) {
+            $codes[] = $activity->code;
+        }
+
+        return Json::encode($codes);
+    }
+
+
 }

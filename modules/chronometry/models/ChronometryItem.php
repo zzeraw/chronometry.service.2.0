@@ -37,7 +37,7 @@ class ChronometryItem extends \yii\db\ActiveRecord
             [['activity_id', 'hour', 'minutes', 'created_at'], 'integer'],
             [['activity_date'], 'safe'],
             [['note'], 'string', 'max' => 300],
-            [['activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => Activities::className(), 'targetAttribute' => ['activity_id' => 'id']],
+            [['activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => Activity::className(), 'targetAttribute' => ['activity_id' => 'id']],
         ];
     }
 
@@ -62,6 +62,6 @@ class ChronometryItem extends \yii\db\ActiveRecord
      */
     public function getActivity()
     {
-        return $this->hasOne(Activities::className(), ['id' => 'activity_id']);
+        return $this->hasOne(Activity::className(), ['id' => 'activity_id']);
     }
 }
