@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\modules\chronometry\components\widgets\MinutesTableWidget;
 
 ?>
 
@@ -19,15 +20,14 @@ use yii\widgets\ActiveForm;
             <?php for ($minutes = 5; $minutes <= 60; $minutes = $minutes + 5) { ?>
                 <td class="<?= $td_css_class ?>" id="minutesCell_<?= $hour ?>_<?= $minutes ?>">
                     <div class="text">
-
+                        <?= $this->context->getCodeById($chronometry_day_form->activity_id[$hour][$minutes]) ?>
                     </div>
 
                     <?= $active_form
                         ->field(
                             $chronometry_day_form,
-                            // "[$hour][$minutes]activity_id"
-                            "activity_id[$hour][$minutes]"
-                            // ['template' => '{input}']
+                            "activity_id[$hour][$minutes]",
+                            ['template' => '{input}']
                         )
                         ->hiddenInput(['class' => 'hidden-activity_id'])
                         ->label(false); ?>
@@ -35,8 +35,8 @@ use yii\widgets\ActiveForm;
                     <?= $active_form
                         ->field(
                             $chronometry_day_form,
-                            "[$hour][$minutes]note"
-                            // ['template' => '{input}']
+                            "note[$hour][$minutes]",
+                            ['template' => '{input}']
                         )
                         ->hiddenInput(['class' => 'hidden-note'])
                         ->label(false); ?>

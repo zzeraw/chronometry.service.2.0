@@ -40,6 +40,11 @@ class MinutesTableWidget extends Widget
      */
     public $td_css_class = 'minutes';
 
+    /**
+     * @var array
+     */
+    public $activities;
+
     public function run()
     {
         return $this->render('minutesTableWidget', [
@@ -50,4 +55,16 @@ class MinutesTableWidget extends Widget
             'active_form' => $this->active_form,
         ]);
     }
+
+    public function getCodeById($id)
+    {
+        foreach ($this->activities as $activity) {
+            if ($activity->id == $id) {
+                return $activity->code;
+            }
+        }
+
+        return false;
+    }
+
 }

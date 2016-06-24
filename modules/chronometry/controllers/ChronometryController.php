@@ -32,30 +32,54 @@ class ChronometryController extends Controller
         ];
     }
 
-    public function actionAddDay($date = false)
+    /**
+     * @param string $date Дата в формате 'ГГГГ-ММ-ДД'
+     * @return string
+     */
+    public function actionAddDay($date = '')
     {
         // получаем модель формы для ввода даты
         // получаем модель формы для таблицы хронометража
-        $chronometry_day_form = new ChronometryDayForm();
+        $chronometry_day_form = new ChronometryDayForm(['scenario' => 'add-day']);
+        // Настраиваем дату
+        $chronometry_day_form->setDateToForm($date);
 
         // получаем список деятельностей для JS-проверок
         $activities = Activity::find()->all();
         $json_activities = Activity::encodeCodesToJson($activities);
 
-        // var_dump($chronometry_day_form);
-        $chronometry_day_form->load(Yii::$app->request->post());
-        // var_dump($chronometry_day_form->activity_id);
+        // Получить и проверить данные из формы POST
+         if ($chronometry_day_form->load(Yii::$app->request->post()) && $chronometry_day_form->validate()) {
+             // создать из POST массив моделей ChronometryItem
+             $chronometry_items = ChronometryItem::createModelsArray($chronometry_day_form);
 
-        // TODO: проверить данные из формы POST
-        // if ($chronometry_day_form->load(Yii::$app->request->post()) && $chronometry_day_form->validate()) {
+             // проверить модели ChronometryItem
+             $validation = ChronometryItem::validateModelsArray($chronometry_items);
+             if ($validation['result']) {
+                 // Одним запросом вставить все модели в таблицу
+                 $result = ChronometryItem::insertModelArray($chronometry_items);
 
-        // }
-        // TODO: создать из POST массив моделей ChronometryItem
-        // TODO: проверить модели ChronometryItem
-        // TODO: Одним запросом вставить все модели в таблицу
+                 if ($result == true) {
+                     // TODO: Перенаправить на view
+                     // TODO: Вывести сообщение об успехе
+                 } else {
+                     var_dump($result);
+                 }
+
+
+             } else {
+                 var_dump($validation);
+             }
+
+         } else {
+             var_dump($chronometry_day_form->getErrors());
+         }
+
+        // TODO: Если произошла перезагрузка страницы, а сохранение не произошло, то пересобираем таблицу (чтобы введенные данные не потерялись)
 
         return $this->render('add-day', [
             'chronometry_day_form' => $chronometry_day_form,
+            'activities' => $activities,
             'json_activities' => $json_activities,
         ]);
     }
