@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-use app\modules\chronometry\components\widgets\MinutesTableWidget;
+use app\modules\chronometry\components\widgets\MinutesAddTableWidget;
 
 
 /* @var $this yii\web\View */
@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
-
     <hr>
 
     <?php $form = ActiveForm::begin(); ?>
@@ -32,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'autoclose' => true,
                 ]
             ]); ?>
-
 
     <hr>
 
@@ -66,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?= MinutesTableWidget::widget([
+    <?= MinutesAddTableWidget::widget([
         'chronometry_day_form' => $chronometry_day_form,
         'active_form' => $form,
         'activities' => $activities,

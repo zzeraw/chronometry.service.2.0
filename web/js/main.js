@@ -1,5 +1,8 @@
 $( document ).ready( function() {
 
+    $( '[data-toggle="tooltip"]' ).tooltip();
+    $( '[data-toggle="popover"]' ).popover();
+
     var quickInputForm = $( '#quickInputForm' );
     var qf_activity_field = $( '#quickInputFormActivity' );
     var qf_minutes_field = $( '#quickInputFormMinutes' );

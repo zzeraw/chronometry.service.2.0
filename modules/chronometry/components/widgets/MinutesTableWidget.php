@@ -9,22 +9,9 @@
 namespace app\modules\chronometry\components\widgets;
 
 use yii\base\Widget;
-use yii\widgets\ActiveForm;
-use app\modules\chronometry\models\form\ChronometryDayForm;
-
 
 class MinutesTableWidget extends Widget
 {
-    /**
-     * @var ChronometryDayForm
-     */
-    public $chronometry_day_form;
-
-    /**
-     * @var ActiveForm
-     */
-    public $active_form;
-
     /**
      * @var string
      */
@@ -44,17 +31,6 @@ class MinutesTableWidget extends Widget
      * @var array
      */
     public $activities;
-
-    public function run()
-    {
-        return $this->render('minutesTableWidget', [
-            'chronometry_day_form' => $this->chronometry_day_form,
-            'table_css_class' => $this->table_css_class,
-            'table_css_id' => $this->table_css_id,
-            'td_css_class' => $this->td_css_class,
-            'active_form' => $this->active_form,
-        ]);
-    }
 
     public function getCodeById($id)
     {

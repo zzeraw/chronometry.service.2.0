@@ -2,20 +2,19 @@
 
 namespace app\modules\chronometry\controllers;
 
-use app\modules\chronometry\models\Activity;
 use Yii;
+use app\helpers\CustomHelper;
+use app\modules\chronometry\models\Activity;
 use app\modules\chronometry\models\ChronometryItem;
 use app\modules\chronometry\models\form\ChronometryDayForm;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\base\Model;
 
 /**
  * ChronometryController implements the CRUD actions for ChronometryItem model.
  */
-class ChronometryController extends Controller
+class ChronometryController extends BaseController
 {
     /**
      * @inheritdoc
@@ -38,8 +37,7 @@ class ChronometryController extends Controller
      */
     public function actionAddDay($date = '')
     {
-        // получаем модель формы для ввода даты
-        // получаем модель формы для таблицы хронометража
+        // получаем модель формы для ввода даты и для таблицы хронометража
         $chronometry_day_form = new ChronometryDayForm(['scenario' => 'add-day']);
         // Настраиваем дату
         $chronometry_day_form->setDateToForm($date);
@@ -50,32 +48,32 @@ class ChronometryController extends Controller
 
         // Получить и проверить данные из формы POST
          if ($chronometry_day_form->load(Yii::$app->request->post()) && $chronometry_day_form->validate()) {
+
              // создать из POST массив моделей ChronometryItem
              $chronometry_items = ChronometryItem::createModelsArray($chronometry_day_form);
 
              // проверить модели ChronometryItem
              $validation = ChronometryItem::validateModelsArray($chronometry_items);
+
              if ($validation['result']) {
                  // Одним запросом вставить все модели в таблицу
                  $result = ChronometryItem::insertModelArray($chronometry_items);
 
                  if ($result == true) {
-                     // TODO: Перенаправить на view
-                     // TODO: Вывести сообщение об успехе
+                     // Выводим сообщение об успехе
+                     $this->setSuccess('Данные за день успешно внесены');
+
+                     // Перенаправляем на view-day
+                     return $this->redirect(['view-day', 'date' => CustomHelper::convertHumanDateToSqlDate($date)]);
                  } else {
-                     var_dump($result);
+//                     var_dump($result);
                  }
-
-
              } else {
-                 var_dump($validation);
+//                 var_dump($validation);
              }
-
          } else {
-             var_dump($chronometry_day_form->getErrors());
+//             var_dump($chronometry_day_form->getErrors());
          }
-
-        // TODO: Если произошла перезагрузка страницы, а сохранение не произошло, то пересобираем таблицу (чтобы введенные данные не потерялись)
 
         return $this->render('add-day', [
             'chronometry_day_form' => $chronometry_day_form,
@@ -92,7 +90,21 @@ class ChronometryController extends Controller
 
     public function actionViewDay($date)
     {
+        // получаем список деятельностей для отображения кодов
+        $activities = Activity::find()->all();
 
+        // Получить массив моделей ChronometryItem для указанной даты
+        $chronometry_item_models_array = ChronometryItem::findAllByDate($date);
+
+        // Преобразовать полученный массив в нужный формат
+        $chronometry_items_array = ChronometryItem::createDayArray($chronometry_item_models_array);
+
+        // Отобразить массив во view
+        return $this->render('view-day', [
+            'date' => CustomHelper::convertSqlDateToHumanDate($date),
+            'chronometry_items_array' => $chronometry_items_array,
+            'activities' => $activities,
+        ]);
     }
 
 

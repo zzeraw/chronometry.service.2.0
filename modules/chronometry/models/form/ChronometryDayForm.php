@@ -5,6 +5,7 @@ namespace app\modules\chronometry\models\form;
 use app\modules\chronometry\models\ChronometryItem;
 use Yii;
 use yii\base\Model;
+use app\helpers\CustomHelper;
 
 class ChronometryDayForm extends Model
 {
@@ -129,10 +130,7 @@ class ChronometryDayForm extends Model
     public function setDateToForm($date)
     {
         if ($date != '') {
-            $datetime_object = new \DateTime($date);
-            $new_date = $datetime_object->format('d.m.Y');
-
-            $this->date = $new_date;
+            $this->date = CustomHelper::convertSqlDateToHumanDate($date);
         }
     }
 }

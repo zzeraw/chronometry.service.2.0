@@ -4,6 +4,7 @@ namespace app\modules\chronometry\models;
 
 use Yii;
 use app\modules\chronometry\models\form\ChronometryDayForm;
+use app\helpers\CustomHelper;
 /**
  * This is the model class for table "chronometry_items".
  *
@@ -72,6 +73,8 @@ class ChronometryItem extends \yii\db\ActiveRecord
     {
         $result = [];
 
+        $activity_date = CustomHelper::convertHumanDateToSqlDate($chronometry_day_form->date);
+
         for ($hour = 0; $hour <= 23; $hour++) {
 
             for ($minutes = 5; $minutes <= 60; $minutes = $minutes + 5) {
@@ -79,7 +82,7 @@ class ChronometryItem extends \yii\db\ActiveRecord
                 $model = new ChronometryItem;
 
                 $model->activity_id = $chronometry_day_form->activity_id[$hour][$minutes];
-                $model->activity_date = $chronometry_day_form->date;
+                $model->activity_date = $activity_date;
                 $model->hour = $hour;
                 $model->minutes = $minutes;
                 $model->note = $chronometry_day_form->note[$hour][$minutes];
@@ -162,5 +165,33 @@ class ChronometryItem extends \yii\db\ActiveRecord
             ->execute();
 
         return $result;
+    }
+
+    /**
+     * @param $date
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function findAllByDate($date)
+    {
+        return self::find()->select('activity_id, note, hour, minutes')->where(['activity_date' => $date])->all();
+    }
+
+    /**
+     * @param $models_array
+     * @return \StdClass
+     */
+    public static function createDayArray($models_array)
+    {
+        $object = new \StdClass();
+
+        $object->activity_id = [];
+        $object->note = [];
+
+        foreach ($models_array as $model) {
+            $object->activity_id[$model->hour][$model->minutes] = $model->activity_id;
+            $object->note[$model->hour][$model->minutes] = $model->note;
+        }
+
+        return $object;
     }
 }
