@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <input type="text" class="form-control" id="quickInputFormMinutes" placeholder="Минуты">
                 </div>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-5">
                 <div class="form-group">
                     <input type="text" class="form-control" id="quickInputFormNote" placeholder="Примечание">
                 </div>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <input type="time" class="form-control" id="quickInputFormTime" placeholder="Время">
                 </div>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-1">
                 <input type="hidden" id="quickInputFormPosition" value="0,5">
                 <button type="submit" class="btn btn-default btn-submit" id="">ОК</button>
             </div>
