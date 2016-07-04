@@ -22,8 +22,6 @@ $( document ).ready( function() {
         }
     } );
 
-
-
     function quickInputCells()
     {
         quickInputForm.find( '.form-group' ).removeClass( 'has-error' );

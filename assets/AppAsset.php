@@ -18,13 +18,19 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/styles.css',
     ];
     public $js = [
         'js/main.js',
     ];
     public $depends = [
+        'app\assets\Html5ShivAsset',
+        'app\assets\RespondAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
+     public $jsOptions = array(
+         'position' => \yii\web\View::POS_END
+     );
 }

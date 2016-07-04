@@ -15,6 +15,14 @@ class BaseController extends Controller
 {
     public $errors = [];
 
+    public function init()
+    {
+        parent::init();
+
+        $this->layout = '@app/modules/chronometry/views/layouts/main';
+    }
+
+
     public function setSuccess($message)
     {
         Yii::$app->getSession()->setFlash('success', [

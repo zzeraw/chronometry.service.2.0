@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-alert": "*",
-        "kartik-v/yii2-widget-growl": "*"
+        "kartik-v/yii2-widget-growl": "*",
+        "bower-asset/html5shiv": "*",
+        "bower-asset/respond": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
