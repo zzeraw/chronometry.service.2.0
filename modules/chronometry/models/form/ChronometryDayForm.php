@@ -61,6 +61,30 @@ class ChronometryDayForm extends Model
         }
     }
 
+//    /**
+//     * @param $attribute
+//     * @param $params
+//     */
+//    public function validateEachCell($attribute, $params)
+//    {
+//        $count = 0;
+//        foreach ($this->$attribute as $hour => $minutes_array) {
+//            foreach ($minutes_array as $minutes => $activity_id) {
+//                $count++;
+//                if (!is_numeric($activity_id)) {
+//                    $this->addError($attribute . '[' . $hour . '][' . $minutes . ']', 'Поле активности должно быть числом.');
+//                }
+//                if (empty($activity_id)) {
+//                    $this->addError($attribute . '[' . $hour . '][' . $minutes . ']', 'Поле активности должно быть заполнено.');
+//                }
+//            }
+//        }
+//
+//        if ($count != 288) {
+//            $this->addError($attribute, 'Массив активностей не содержит 288 элементов.');
+//        }
+//    }
+
     /**
      * @param $attribute
      * @param $params
